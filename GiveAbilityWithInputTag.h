@@ -59,7 +59,7 @@ public:
 	TArray<FGiveAbilityActor_GameplayAbility> GrantedGameplayAbilities;
 
 	// Gameplay abilities to grant when this ability set is granted.
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "!Gameplay Abilities")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay Abilities")
 	bool bEnableDebugMessages = false;;
 
 };
