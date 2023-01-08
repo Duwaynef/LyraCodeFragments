@@ -43,7 +43,7 @@ void AGiveAbilityActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 			FString AbilityString = LyraASC->FindAbilitySpecFromHandle(AbilityHandles[i])->Ability->GetName();
 			AbilityHandleStrings.Add(AbilityString);
 			
-			if (AbilityString.MatchesWildcard("*_*"))
+			if (AbilityString.MatchesWildcard("*_*") && bEnableDebugMessages)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("GiveAbilityActor, User already has ability, %s"), *AbilityString);
 			}
@@ -76,7 +76,10 @@ void AGiveAbilityActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 
 		if (!IsValid(AbilityToGrant.Ability))
 		{
-			UE_LOG(LogTemp, Error, TEXT("GrantedGameplayAbilities[%d] on ability set [%s] is not valid."), AbilityIndex, *GetNameSafe(this));
+			if (bEnableDebugMessages)
+			{
+				UE_LOG(LogTemp, Error, TEXT("GrantedGameplayAbilities[%d] on ability set [%s] is not valid."), AbilityIndex, *GetNameSafe(this));
+			}
 			continue;
 		}
 
