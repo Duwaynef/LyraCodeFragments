@@ -13,3 +13,14 @@ You can configure an array of:
   - If the ability stacks
 
 And display debug messages that will show all abilities the user has
+
+
+## MyBlueprintFunctionLibary
+
+Contains one blueprint node currently:
+  - Give Actor ability with InputTag
+      - Ability      
+      - Ability Level
+      - Target
+      - InputTag
+      - Stackable      
