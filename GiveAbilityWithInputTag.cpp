@@ -4,6 +4,7 @@
 #include "GiveAbilityActor.h"
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
+#include "Kismet/KismetStringLibrary.h"
 
 // Sets default values
 AGiveAbilityActor::AGiveAbilityActor()
@@ -31,6 +32,24 @@ void AGiveAbilityActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 	UAbilitySystemComponent* LyraASC = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(OtherActor);
 	check(LyraASC);
 	
+	TArray<FGameplayAbilitySpecHandle> AbilityHandles;
+	LyraASC->GetAllAbilities(AbilityHandles);
+
+	TArray<FString> AbilityHandleStrings;
+	if(AbilityHandles.Num() > 0)
+	{
+		for (int i = 0; i < AbilityHandles.Num(); i++)
+		{
+			FString AbilityString = LyraASC->FindAbilitySpecFromHandle(AbilityHandles[i])->Ability->GetName();
+			AbilityHandleStrings.Add(AbilityString);
+			
+			if (AbilityString.MatchesWildcard("*_*"))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("GiveAbilityActor, User already has ability, %s"), *AbilityString);
+			}
+		}
+	}
+	
 	if (!LyraASC->IsOwnerActorAuthoritative())
 	{
 		// Must be authoritative to give or take ability sets.
@@ -45,6 +64,15 @@ void AGiveAbilityActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 	{
 	
 		const FGiveAbilityActor_GameplayAbility& AbilityToGrant = GrantedGameplayAbilities[AbilityIndex];
+		
+		if (!AbilityToGrant.bAllowStacking && AbilityHandleStrings.Contains("Default__" + AbilityToGrant.Ability->GetName()))
+		{
+			if (bEnableDebugMessages)
+			{			
+				UE_LOG(LogTemp, Warning, TEXT("GiveAbilityActor, User already has ability, and stacking disabled"));
+			}
+			continue;
+		}
 
 		if (!IsValid(AbilityToGrant.Ability))
 		{
