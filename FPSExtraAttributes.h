@@ -22,6 +22,8 @@ class FPSROGUELIKERUNTIME_API UFPSExtraAttributes : public ULyraAttributeSet
 	GENERATED_BODY()
 
 public:
+
+	UFPSExtraAttributes();
 	
 	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, HPRegen)	
 	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, ArmorRegen)	
