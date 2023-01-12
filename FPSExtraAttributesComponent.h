@@ -72,5 +72,5 @@ protected:
 	ULyraAbilitySystemComponent* AbilitySystemComponent;
 
 	UPROPERTY()
-	const UFPSExtraAttributesComponent* FPSExtraAttributes;
+	const UFPSExtraAttributes* FPSExtraAttributes;
 };
