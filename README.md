@@ -7,7 +7,8 @@ This allows you to extend the existing attributes. if you want to add it to all 
 
 LyraCharacter.h
   - #include "FPSExtraAttributesComponent.h"
-  - class FPSExtraAttributesComponent;
+  - import class
+    - class FPSExtraAttributesComponent;
   - line 157 ish,
     - 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta = (AllowPrivateAccess = "true"))
 	      TObjectPtr<UFPSExtraAttributesComponent> FPSExtraAttributesComponent;
