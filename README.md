@@ -9,7 +9,7 @@ LyraCharacter.h
   - #include "FPSExtraAttributesComponent.h"
   - import class
     - class FPSExtraAttributesComponent;
-  - line 157 ish
+  - line 157 ish under private:
     - 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta = (AllowPrivateAccess = "true"))
 	      TObjectPtr<UFPSExtraAttributesComponent> FPSExtraAttributesComponent;
 
