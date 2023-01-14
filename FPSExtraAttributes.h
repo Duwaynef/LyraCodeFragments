@@ -2,40 +2,47 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "AttributeSet.h"
 #include "AbilitySystem/Attributes/LyraAttributeSet.h"
+#include "Misc/AssertionMacros.h"
+#include "UObject/Class.h"
+#include "UObject/UObjectGlobals.h"
 #include "FPSExtraAttributes.generated.h"
-
-#define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
-		GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
-		GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
-		GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
-		GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
 class UObject;
 struct FFrame;
+struct FGameplayEffectModCallbackData;
 
-UCLASS()
-class FPSROGUELIKERUNTIME_API UFPSExtraAttributes : public ULyraAttributeSet
+UCLASS(BlueprintType)
+class LYRAGAME_API UFPSExtraAttributes : public ULyraAttributeSet
 {
 	GENERATED_BODY()
 
 public:
 
 	UFPSExtraAttributes();
+
 	
-	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, HPRegen)	
-	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, ArmorRegen)	
-	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, StaminaRegen)
+	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, Armor);
+	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, MaxArmor);
+	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, ArmorRegen);
+	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, StaminaRegen);
+	ATTRIBUTE_ACCESSORS(UFPSExtraAttributes, ManaRegen);
 
 protected:
 
 	UFUNCTION()
-	void OnRep_HPRegen(const FGameplayAttributeData& OldValue);
+	void OnRep_Armor(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	void OnRep_MaxArmor(const FGameplayAttributeData& OldValue);
 
 	UFUNCTION()
 	void OnRep_ArmorRegen(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	void OnRep_ManaRegen(const FGameplayAttributeData& OldValue);
 
 	UFUNCTION()
 	void OnRep_StaminaRegen(const FGameplayAttributeData& OldValue);
@@ -48,14 +55,21 @@ protected:
 
 
 private:
-	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseDamage, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
-	FGameplayAttributeData HPRegen;	
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseDamage, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Armor, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData Armor;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxArmor, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData MaxArmor;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ArmorRegen, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData ArmorRegen;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseDamage, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_StaminaRegen, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
 	FGameplayAttributeData StaminaRegen;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaRegen, Category = "FPS|Attributes", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData ManaRegen;
 	
 };
