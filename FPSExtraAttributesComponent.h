@@ -4,17 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Components/GameFrameworkComponent.h"
-#include "Delegates/Delegate.h"
-#include "GameFramework/Actor.h"
+#include "FPSExtraAttributes.h"
 #include "FPSExtraAttributesComponent.generated.h"
 
-struct FOnAttributeChangeData;
 class UFPSExtraAttributes;
+struct FOnAttributeChangeData;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFPSExtraAttributes_AttributeChanged, UFPSExtraAttributesComponent*, UFPSExtraAttributesComponent, float,
 											   OldValue, float, NewValue, AActor*, Instigator);
 
-UCLASS()
-class FPSROGUELIKERUNTIME_API UFPSExtraAttributesComponent : public UGameFrameworkComponent
+class ULyraAbilitySystemComponent;
+
+UCLASS(Blueprintable, meta=(BlueprintSpawnableComponent))
+class LYRAGAME_API UFPSExtraAttributesComponent : public UGameFrameworkComponent
 {
 	GENERATED_BODY()
 
@@ -37,6 +39,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
 	void UninitializeFromAbilitySystem();
 
+	// Returns the current Armor value.
+	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+	float GetArmor() const;
+
+	// Returns the current maximum Armor value.
+	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+	float GetMaxArmor() const;
+
+	// Returns the current Armor in the range [0.0, 1.0].
+	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+	float GetArmorNormalized() const;
+
 	// Returns the current value.
 	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
 	float GetHPRegen() const;
@@ -47,8 +61,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
 	float GetStaminaRegen() const;
+
+	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+	float GetManaRegen() const;
 	
-	// Delegate fired when the value has changed.
+	UPROPERTY(BlueprintAssignable)
+	FFPSExtraAttributes_AttributeChanged OnArmorChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FFPSExtraAttributes_AttributeChanged OnMaxArmorChanged;
+	
 	UPROPERTY(BlueprintAssignable)
 	FFPSExtraAttributes_AttributeChanged OnHPRegenChanged;
 
@@ -61,10 +83,13 @@ public:
 protected:
 	
 	virtual void OnUnregister() override;
-	
+
+	virtual void HandleArmorChanged(const FOnAttributeChangeData& ChangeData);
+	virtual void HandleMaxArmorChanged(const FOnAttributeChangeData& ChangeData);
 	virtual void HandleHPRegenChanged(const FOnAttributeChangeData& ChangeData);
 	virtual void HandleArmorRegenChanged(const FOnAttributeChangeData& ChangeData);
 	virtual void HandleStaminaRegenChanged(const FOnAttributeChangeData& ChangeData);
+	virtual void HandleManaRegenChanged(const FOnAttributeChangeData& ChangeData);
 
 	
 	// Ability system used by this component.
@@ -72,5 +97,5 @@ protected:
 	ULyraAbilitySystemComponent* AbilitySystemComponent;
 
 	UPROPERTY()
-	const UFPSExtraAttributes* FPSExtraAttributes;
+	TObjectPtr<const UFPSExtraAttributes> FPSExtraAttributes;
 };
