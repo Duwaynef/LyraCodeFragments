@@ -3,7 +3,7 @@ intresting code fragments from lyra cpp
 
 ## FPSExtraAttributes & FPSExtraAttributesComponent
 
-This allows you to extend the existing attributes. if you want to add it to all LyraPlayercharacters by default without using the definitions (i haven't been able to get this working) you have to make the changes to Lyra below.
+This allows you to extend the existing attributes. if you want to add it to all LyraPlayercharacters by default without using the definitions (i haven't been able to get this working with the experience definitions) you have to make the changes to Lyra below.
 
 LyraCharacter.h
   - #include "FPSExtraAttributesComponent.h"
