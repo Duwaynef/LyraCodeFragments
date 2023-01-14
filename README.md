@@ -9,13 +9,13 @@ LyraCharacter.h
   - #include "FPSExtraAttributesComponent.h"
   - import class
     - class FPSExtraAttributesComponent;
-  - line 157 ish,
+  - line 157 ish
     - 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta = (AllowPrivateAccess = "true"))
 	      TObjectPtr<UFPSExtraAttributesComponent> FPSExtraAttributesComponent;
 
 LyraCharacter.cpp
   -   #include "FPSExtraAttributesComponent.h"
-  -   line 97 ish,
+  -   line 97 ish
     -   FPSExtraAttributesComponent = CreateDefaultSubobject<UFPSExtraAttributesComponent>(TEXT("FPSExtraAttributesComponent"));
   - under OnAbilitySystemInitialized() line 226 ish
     -   FPSExtraAttributesComponent->InitializeWithAbilitySystem(LyraASC);
