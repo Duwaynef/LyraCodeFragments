@@ -1,6 +1,21 @@
 # LyraCodeFragments
 intresting code fragments from lyra cpp
 
+## MyBlueprintFunctionLibary
+
+Contains two blueprint nodes currently:
+  - Give Actor ability with InputTag
+      - Ability      
+      - Ability Level
+      - Target
+      - InputTag
+      - Stackable     
+      
+  - SpawnEnemy: (Spawns enemy using the gameplay experience, and pawn data)
+      - GameMode
+      - GameStateComponent
+      - AIControler
+
 ## FPSTeamCreationComponent
 
 This allows overriding of the player team setup, in the case of the code posted here it does players become team 1 and bots team 2
@@ -43,15 +58,4 @@ You can configure an array of:
   - Ability level
   - If the ability stacks
 
-And display debug messages that will show all abilities the user has
-
-
-## MyBlueprintFunctionLibary
-
-Contains one blueprint node currently:
-  - Give Actor ability with InputTag
-      - Ability      
-      - Ability Level
-      - Target
-      - InputTag
-      - Stackable      
+And display debug messages that will show all abilities the user has 
