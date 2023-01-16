@@ -6,10 +6,15 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "GameplayTagContainer.h"
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
+#include "GameModes/LyraGameMode.h"
+#include "Components/GameStateComponent.h"
+#include "Character/LyraPawnExtensionComponent.h"
 #include "MyBlueprintFunctionLibrary.generated.h"
 
 
 class ULyraGameplayAbility;
+class ULyraPawnData;
+class UGameStateComponent;
 
 USTRUCT(BlueprintType)
 struct FMyBlueprintFunctionLibrary_GameplayAbilityStruct
@@ -44,9 +49,12 @@ class LYRAGAME_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrar
 	GENERATED_BODY()
 
 public:
-	
+
 	UFUNCTION(BlueprintCallable, Category="FPS Blueprint Functions")
 	static void GiveActorAbilityWithInputTag(AActor* TargetActor, UAbilitySystemComponent* AbilitySystemComponent,
 		FMyBlueprintFunctionLibrary_GameplayAbilityStruct AbilityStruct);
+
+	UFUNCTION(BlueprintCallable, Category="FPS Blueprint Functions")
+	static void SpawnEnemy(UGameStateComponent* GameStateComponent, AFPSGameMode* GameMode, TSubclassOf<AAIController> BotControllerClass);	
 	
 };
