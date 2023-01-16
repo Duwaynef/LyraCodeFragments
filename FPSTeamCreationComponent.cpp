@@ -32,5 +32,4 @@ void UFPSTeamCreationComponent::ServerChooseTeamForPlayer(ALyraPlayerState* PS)
 		TeamID = IntegerToGenericTeamId(TeamID);
 		PS->SetGenericTeamId(TeamID);
 	}
-	// Super::ServerChooseTeamForPlayer(PS);
 }
