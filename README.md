@@ -1,6 +1,11 @@
 # LyraCodeFragments
 intresting code fragments from lyra cpp
 
+## FPSTeamCreationComponent
+
+This allows overriding of the player team setup, in the case of the code posted here it does players become team 1 and bots team 2
+to make a PvE based game.
+
 ## FPSExtraAttributes & FPSExtraAttributesComponent
 
 This allows you to extend the existing attributes. if you want to add it to all LyraPlayercharacters by default without using the definitions (i haven't been able to get this working with the experience definitions) you have to make the changes to Lyra below.
