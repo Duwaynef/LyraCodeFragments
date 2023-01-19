@@ -27,8 +27,12 @@ This is a example game mode that allows you to give enemies and players differen
 we must make other lyra changes to make this implmentation work, that includes:
 
 LyraPlayerState.cpp
-  - #include "FPSGamemode.h" // relative to your gamemode at the top
-  - change: (here we are telling it to call our custom get pawn data code) around line: 126
+
+```c
+#include "FPSGamemode.h" // relative to your gamemode at the top
+```
+
+  change: (here we are telling it to call our custom get pawn data code) around line: 126
 
 ```c
 if (const ULyraPawnData* NewPawnData = LyraGameMode->GetPawnDataForController(GetOwningController()))
@@ -40,7 +44,7 @@ if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(Ge
 
 LyraExperienceDefinition.h
   - we add: around line:46 under public:
-  
+
 ```c
           UPROPERTY(EditDefaultsOnly, Category=Gameplay)
           TObjectPtr<const ULyraPawnData> DefaultEnemyData;
@@ -64,26 +68,46 @@ to make a PvE based game.
 This allows you to extend the existing attributes. if you want to add it to all LyraPlayercharacters by default without using the definitions (i haven't been able to get this working with the experience definitions) you have to make the changes to Lyra below.
 
 LyraCharacter.h
-  - #include "FPSExtraAttributesComponent.h"
+```c
+#include "FPSExtraAttributesComponent.h"
+```
   - import class
-    - class FPSExtraAttributesComponent;
+```c
+class FPSExtraAttributesComponent;
+```
   - line 157 ish under private:
-    - 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta = (AllowPrivateAccess = "true"))
-	      TObjectPtr<UFPSExtraAttributesComponent> FPSExtraAttributesComponent;
+
+```c
+UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta = (AllowPrivateAccess = "true"))
+TObjectPtr<UFPSExtraAttributesComponent> FPSExtraAttributesComponent;
+```
 
 LyraCharacter.cpp
-  -   #include "FPSExtraAttributesComponent.h"
+
+```c
+#include "FPSExtraAttributesComponent.h"
+```
   -   line 97 ish
-    -   FPSExtraAttributesComponent = CreateDefaultSubobject<UFPSExtraAttributesComponent>(TEXT("FPSExtraAttributesComponent"));
+```c
+FPSExtraAttributesComponent = CreateDefaultSubobject<UFPSExtraAttributesComponent>(TEXT("FPSExtraAttributesComponent"));
+```
   - under OnAbilitySystemInitialized() line 226 ish
-    -   FPSExtraAttributesComponent->InitializeWithAbilitySystem(LyraASC);
+```c
+FPSExtraAttributesComponent->InitializeWithAbilitySystem(LyraASC);
+```
   - under UninitializeFromAbilitySystem() line 234 ish
-    -   FPSExtraAttributesComponent->UninitializeFromAbilitySystem();
+```c
+FPSExtraAttributesComponent->UninitializeFromAbilitySystem();
+```
 
 LyraPlayerState.cpp
-  -   #include "FPSExtraAttributes.h"
+```c
+#include "FPSExtraAttributes.h"
+```
   -   line 56 ish
-    -   CreateDefaultSubobject<UFPSExtraAttributes>(TEXT("FPSExtraAttributes"));
+```c
+CreateDefaultSubobject<UFPSExtraAttributes>(TEXT("FPSExtraAttributes"));
+```
 
 ## GiveAbilityWithInputTag
 
