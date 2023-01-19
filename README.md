@@ -1,5 +1,5 @@
 # LyraCodeFragments
-intresting code fragments from lyra cpp
+intresting code fragments from lyra cpp, and the methods i used to overcome road blocks.
 
 ## MyBlueprintFunctionLibary
 
