@@ -9,12 +9,42 @@ Contains two blueprint nodes currently:
       - Ability Level
       - Target
       - InputTag
-      - Stackable     
+      - Stackable
+
+![alt text](https://github.com/DuwayneF/LyraCodeFragments/blob/main/images/GiveActorAbility.png?raw=true)
       
   - SpawnEnemy: (Spawns enemy using the gameplay experience, and pawn data)
       - GameMode
       - GameStateComponent
       - AIControler
+
+![alt text](https://github.com/DuwayneF/LyraCodeFragments/blob/main/images/SpawnEnemyWithHeroData.png?raw=true)
+
+## FPSGameMode
+
+This is a example game mode that allows you to give enemies and players different pawn data from your gameplay experience, this allows you to spawn enemies with their own specific gameplay abilities etc. for instance if you wanted your player to have the respawn abiltiy but not the enemy you could have the same pawn data for both, but leave out the respawn on the enemy data.
+
+we must make other lyra changes to make this implmentation work, that includes:
+
+LyraPlayerState.cpp
+  - #include "FPSGamemode.h" // relative to your gamemode at the top
+  - change: (here we are telling it to call our custom get pawn data code) around line: 126
+      - if (const ULyraPawnData* NewPawnData = LyraGameMode->GetPawnDataForController(GetOwningController()))
+      to
+      - if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(GetOwningController()))
+
+LyraExperienceDefinition.h
+  - we add: around line:46 under public:
+      - 	UPROPERTY(EditDefaultsOnly, Category=Gameplay)
+          TObjectPtr<const ULyraPawnData> DefaultEnemyData; 
+
+In the FPSGamemode.cpp the logic can be extended to do more than player vs bot hero data if you needed
+different data for different enemies per say.
+
+in the end we end up with this image below in our experience definition:
+
+![alt text](https://github.com/DuwayneF/LyraCodeFragments/blob/main/images/EnemyPawnData.png?raw=true)
+
 
 ## FPSTeamCreationComponent
 
