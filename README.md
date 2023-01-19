@@ -32,7 +32,7 @@ we must make other lyra changes to make this implmentation work, that includes:
 ```c
   include "FPSGamemode.h" // where ever your game mode file is
 ```
-  change: (here we are allowing the GetPawnDataForController to be overriden) around line: 48
+  change: (here we change the LyraPlayerState to go to our game mode for the hero data) around line: 126
 
 ```c
 	if (ALyraGameMode* LyraGameMode = GetWorld()->GetAuthGameMode<ALyraGameMode>())
