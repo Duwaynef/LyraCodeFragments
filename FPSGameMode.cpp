@@ -9,7 +9,7 @@
 #include "Character/LyraPawnExtensionComponent.h"
 #include "LyraLogChannels.h"
 
-const ULyraPawnData *AFPSGameMode::GetPawnDataForController(const AController *InController) const
+const ULyraPawnData *AFPSGameMode::GetEnemyDataForController(const AController *InController) const
 {
 	// See if pawn data is already set on the player state
 	if (InController != nullptr)
