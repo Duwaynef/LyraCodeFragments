@@ -35,8 +35,10 @@ LyraPlayerState.cpp
 
 LyraExperienceDefinition.h
   - we add: around line:46 under public:
-      - 	UPROPERTY(EditDefaultsOnly, Category=Gameplay)
-          TObjectPtr<const ULyraPawnData> DefaultEnemyData; 
+      - 	```c
+          UPROPERTY(EditDefaultsOnly, Category=Gameplay)
+          TObjectPtr<const ULyraPawnData> DefaultEnemyData;
+          ``` 
 
 In the FPSGamemode.cpp the logic can be extended to do more than player vs bot hero data if you needed
 different data for different enemies per say.
