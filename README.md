@@ -26,20 +26,17 @@ This is a example game mode that allows you to give enemies and players differen
 
 we must make other lyra changes to make this implmentation work, that includes:
 
-**LyraPlayerState.cpp**
+**LyraGameMode.cpp**
+
+  change: (here we are allowing the GetPawnDataForController to be overriden) around line: 48
 
 ```c
-#include "FPSGamemode.h" // relative to your gamemode at the top
-```
-
-  change: (here we are telling it to call our custom get pawn data code) around line: 126
-
-```c
-if (const ULyraPawnData* NewPawnData = LyraGameMode->GetPawnDataForController(GetOwningController()))
+const ULyraPawnData* GetPawnDataForController(const AController* InController) const;
 
 to:
 
-if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(GetOwningController()))
+virtual const ULyraPawnData* GetPawnDataForController(const AController* InController) const;
+
 ```
 
 **LyraExperienceDefinition.h**

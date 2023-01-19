@@ -21,8 +21,8 @@ class LYRAGAME_API AFPSGameMode : public ALyraGameMode
 public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Lyra|Pawn")
-	const ULyraPawnData* GetEnemyDataForController(const AController* InController);
-	
-	virtual APawn* SpawnDefaultPawnAtTransform_Implementation(AController* NewPlayer, const FTransform& SpawnTransform) override;
+  virtual const ULyraPawnData *GetPawnDataForController(const AController *InController) const override;
+
+  virtual APawn* SpawnDefaultPawnAtTransform_Implementation(AController* NewPlayer, const FTransform& SpawnTransform) override;
   
 };
