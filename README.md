@@ -26,7 +26,7 @@ This is a example game mode that allows you to give enemies and players differen
 
 we must make other lyra changes to make this implmentation work, that includes:
 
-LyraPlayerState.cpp
+**LyraPlayerState.cpp**
 
 ```c
 #include "FPSGamemode.h" // relative to your gamemode at the top
@@ -42,15 +42,15 @@ to:
 if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(GetOwningController()))
 ```
 
-#LyraExperienceDefinition.h
-  - we add: around line:46 under public:
+**LyraExperienceDefinition.h**
+  - we add: around line: 46 under public:
 
 ```c
           UPROPERTY(EditDefaultsOnly, Category=Gameplay)
           TObjectPtr<const ULyraPawnData> DefaultEnemyData;
 ``` 
 
-In the FPSGamemode.cpp the logic can be extended to do more than player vs bot hero data if you needed
+In the **FPSGamemode.cpp** the logic can be extended to do more than player vs bot hero data if you needed
 different data for different enemies per say.
 
 in the end we end up with this image below in our experience definition:
@@ -67,7 +67,7 @@ to make a PvE based game.
 
 This allows you to extend the existing attributes. if you want to add it to all LyraPlayercharacters by default without using the definitions (i haven't been able to get this working with the experience definitions) you have to make the changes to Lyra below.
 
-LyraCharacter.h
+**LyraCharacter.h**
 ```c
 #include "FPSExtraAttributesComponent.h"
 ```
@@ -82,7 +82,7 @@ UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta 
 TObjectPtr<UFPSExtraAttributesComponent> FPSExtraAttributesComponent;
 ```
 
-LyraCharacter.cpp
+**LyraCharacter.cpp**
 
 ```c
 #include "FPSExtraAttributesComponent.h"
@@ -100,7 +100,7 @@ FPSExtraAttributesComponent->InitializeWithAbilitySystem(LyraASC);
 FPSExtraAttributesComponent->UninitializeFromAbilitySystem();
 ```
 
-#LyraPlayerState.cpp
+**LyraPlayerState.cpp**
 ```c
 #include "FPSExtraAttributes.h"
 ```
