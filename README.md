@@ -43,7 +43,7 @@ to:
 
 	if (AFPSGameMode* FPSGameMode = GetWorld()->GetAuthGameMode<AFPSGameMode>())
 	{
-		if (const ULyraPawnData* NewPawnData = FPSGameMode->GetPawnDataForController(GetOwningController()))
+		if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(GetOwningController()))
 
 ```
 
