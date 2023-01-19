@@ -42,7 +42,7 @@ to:
 if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(GetOwningController()))
 ```
 
-LyraExperienceDefinition.h
+#LyraExperienceDefinition.h
   - we add: around line:46 under public:
 
 ```c
@@ -100,7 +100,7 @@ FPSExtraAttributesComponent->InitializeWithAbilitySystem(LyraASC);
 FPSExtraAttributesComponent->UninitializeFromAbilitySystem();
 ```
 
-LyraPlayerState.cpp
+#LyraPlayerState.cpp
 ```c
 #include "FPSExtraAttributes.h"
 ```
