@@ -29,16 +29,22 @@ we must make other lyra changes to make this implmentation work, that includes:
 LyraPlayerState.cpp
   - #include "FPSGamemode.h" // relative to your gamemode at the top
   - change: (here we are telling it to call our custom get pawn data code) around line: 126
-      - if (const ULyraPawnData* NewPawnData = LyraGameMode->GetPawnDataForController(GetOwningController()))
-      to
-      - if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(GetOwningController()))
+
+```c
+if (const ULyraPawnData* NewPawnData = LyraGameMode->GetPawnDataForController(GetOwningController()))
+
+to:
+
+if (const ULyraPawnData* NewPawnData = FPSGameMode->GetEnemyDataForController(GetOwningController()))
+```
 
 LyraExperienceDefinition.h
   - we add: around line:46 under public:
-      - 	```c
+  
+```c
           UPROPERTY(EditDefaultsOnly, Category=Gameplay)
           TObjectPtr<const ULyraPawnData> DefaultEnemyData;
-          ``` 
+``` 
 
 In the FPSGamemode.cpp the logic can be extended to do more than player vs bot hero data if you needed
 different data for different enemies per say.
