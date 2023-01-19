@@ -4,7 +4,7 @@ intresting code fragments from lyra cpp
 ## MyBlueprintFunctionLibary
 
 Contains two blueprint nodes currently:
-  - Give Actor ability with InputTag
+  - **Give Actor ability with InputTag**
       - Ability      
       - Ability Level
       - Target
@@ -13,7 +13,7 @@ Contains two blueprint nodes currently:
 
 ![alt text](https://github.com/DuwayneF/LyraCodeFragments/blob/main/images/GiveActorAbility.png?raw=true)
       
-  - SpawnEnemy: (Spawns enemy using the gameplay experience, and pawn data)
+  - **SpawnEnemy**: (Spawns enemy using the gameplay experience, and pawn data)
       - GameMode
       - GameStateComponent
       - AIControler
