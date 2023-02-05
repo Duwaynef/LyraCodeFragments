@@ -99,13 +99,12 @@ protected:
 
 	virtual void HandleArmorChanged(const FOnAttributeChangeData& ChangeData);
 	virtual void HandleMaxArmorChanged(const FOnAttributeChangeData& ChangeData);
-	virtual void HandleHPRegenChanged(const FOnAttributeChangeData& ChangeData);
-	virtual void HandleArmorRegenChanged(const FOnAttributeChangeData& ChangeData);
-	virtual void HandleStaminaRegenChanged(const FOnAttributeChangeData& ChangeData);
-	virtual void HandleManaRegenChanged(const FOnAttributeChangeData& ChangeData);
+  virtual void HandleStaminaChanged(const FOnAttributeChangeData &ChangeData);
+  virtual void HandleMaxStaminaChanged(const FOnAttributeChangeData &ChangeData);
+  virtual void HandleManaChanged(const FOnAttributeChangeData &ChangeData);
+  virtual void HandleMaxManaChanged(const FOnAttributeChangeData &ChangeData);
 
-	
-	// Ability system used by this component.
+  // Ability system used by this component.
 	UPROPERTY()
 	ULyraAbilitySystemComponent* AbilitySystemComponent;
 
