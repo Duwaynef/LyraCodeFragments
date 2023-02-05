@@ -39,46 +39,59 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
 	void UninitializeFromAbilitySystem();
 
-	// Returns the current Armor value.
+	// Returns the current attribute value.
 	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
 	float GetArmor() const;
 
-	// Returns the current maximum Armor value.
+	// Returns the current maximum attribute value.
 	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
 	float GetMaxArmor() const;
 
-	// Returns the current Armor in the range [0.0, 1.0].
+	// Returns the current attribute in the range [0.0, 1.0].
 	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
 	float GetArmorNormalized() const;
 
-	// Returns the current value.
-	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
-	float GetHPRegen() const;
+  // Returns the current attribute value.
+  UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+  float GetStamina() const;
 
-	// Returns the current  value.
-	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
-	float GetArmorRegen() const;
+  // Returns the current maximum attribute value.
+  UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+  float GetMaxStamina() const;
 
-	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
-	float GetStaminaRegen() const;
+  // Returns the current attribute in the range [0.0, 1.0].
+  UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+  float GetStaminaNormalized() const;
 
-	UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
-	float GetManaRegen() const;
-	
-	UPROPERTY(BlueprintAssignable)
+  // Returns the current attribute value.
+  UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+  float GetMana() const;
+
+  // Returns the current maximum attribute value.
+  UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+  float GetMaxMana() const;
+
+  // Returns the current attribute in the range [0.0, 1.0].
+  UFUNCTION(BlueprintCallable, Category = "FPS|Attributes")
+  float GetManaNormalized() const;
+
+  UPROPERTY(BlueprintAssignable)
 	FFPSExtraAttributes_AttributeChanged OnArmorChanged;
 
 	UPROPERTY(BlueprintAssignable)
 	FFPSExtraAttributes_AttributeChanged OnMaxArmorChanged;
-	
-	UPROPERTY(BlueprintAssignable)
-	FFPSExtraAttributes_AttributeChanged OnHPRegenChanged;
 
-	UPROPERTY(BlueprintAssignable)
-	FFPSExtraAttributes_AttributeChanged OnArmorRegenChanged;
+  UPROPERTY(BlueprintAssignable)
+  FFPSExtraAttributes_AttributeChanged OnManaChanged;
 
-	UPROPERTY(BlueprintAssignable)
-	FFPSExtraAttributes_AttributeChanged OnStaminaRegenChanged;
+  UPROPERTY(BlueprintAssignable)
+  FFPSExtraAttributes_AttributeChanged OnMaxManaChanged;
+
+  UPROPERTY(BlueprintAssignable)
+  FFPSExtraAttributes_AttributeChanged OnStaminaChanged;
+
+  UPROPERTY(BlueprintAssignable)
+  FFPSExtraAttributes_AttributeChanged OnMaxStaminaChanged;
 
 protected:
 	

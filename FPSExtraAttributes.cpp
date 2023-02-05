@@ -14,11 +14,12 @@
 class FLifetimeProperty;
 
 UFPSExtraAttributes::UFPSExtraAttributes()
-	: Armor(0.0f)
+	: Armor(100.0f)
 	, MaxArmor(100.0f)
-	, ArmorRegen(0.0f)
-	, StaminaRegen(0.0f)
-	, ManaRegen(0.0f)
+	, Stamina(100.0f)
+	, MaxStamina(0.0f)
+	, Mana(100.0f)
+  , MaxMana(0.0f)
 {
 }
 
@@ -28,9 +29,10 @@ void UFPSExtraAttributes::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	
 	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, Armor, COND_OwnerOnly, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, MaxArmor, COND_OwnerOnly, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, ArmorRegen, COND_OwnerOnly, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, StaminaRegen, COND_OwnerOnly, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, ManaRegen, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, Stamina, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, MaxStamina, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, Mana, COND_OwnerOnly, REPNOTIFY_Always);
+  DOREPLIFETIME_CONDITION_NOTIFY(UFPSExtraAttributes, MaxMana, COND_OwnerOnly, REPNOTIFY_Always);
 }
 
 void UFPSExtraAttributes::OnRep_Armor(const FGameplayAttributeData& OldValue)
@@ -43,19 +45,24 @@ void UFPSExtraAttributes::OnRep_MaxArmor(const FGameplayAttributeData& OldValue)
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, MaxArmor, OldValue);
 }
 
-void UFPSExtraAttributes::OnRep_ArmorRegen(const FGameplayAttributeData& OldValue)
+void UFPSExtraAttributes::OnRep_Stamina(const FGameplayAttributeData& OldValue)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, ArmorRegen, OldValue);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, Stamina, OldValue);
 }
 
-void UFPSExtraAttributes::OnRep_ManaRegen(const FGameplayAttributeData& OldValue)
+void UFPSExtraAttributes::OnRep_MaxStamina(const FGameplayAttributeData &OldValue)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, ManaRegen, OldValue);
+  GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, MaxStamina, OldValue);
 }
 
-void UFPSExtraAttributes::OnRep_StaminaRegen(const FGameplayAttributeData& OldValue)
+void UFPSExtraAttributes::OnRep_Mana(const FGameplayAttributeData& OldValue)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, StaminaRegen, OldValue);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, Mana, OldValue);
+}
+
+void UFPSExtraAttributes::OnRep_MaxMana(const FGameplayAttributeData &OldValue)
+{
+  GAMEPLAYATTRIBUTE_REPNOTIFY(UFPSExtraAttributes, MaxMana, OldValue);
 }
 
 void UFPSExtraAttributes::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const
@@ -74,27 +81,32 @@ void UFPSExtraAttributes::ClampAttribute(const FGameplayAttribute& Attribute, fl
 {
 	if (Attribute == GetArmorAttribute())
 	{
-		// Do not allow health to go negative or above max health.
+		// Do not allow attribute to go negative or above max.
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxArmor());
 	}
 	else if (Attribute == GetMaxArmorAttribute())
 	{
-		// Do not allow max health to drop below 1.
-		NewValue = FMath::Max(NewValue, 1.0f);
+		// Do not allow max to drop below 0.
+		NewValue = FMath::Max(NewValue, 0.0f);
 	}
-	else if (Attribute == GetHPRegenAttribute())
+	else if (Attribute == GetStaminaAttribute())
 	{
-		// Do not allow HP regen to go negative or above max.
-		NewValue = FMath::Clamp(NewValue, 0.0f, 1000.0f);
+    // Do not allow attribute to go negative or above max.
+    NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxStaminaAttribute());
 	}
-	else if (Attribute == GetArmorRegenAttribute())
+  else if (Attribute == GetMaxStaminaAttribute())
+  {
+    // Do not allow max to drop below 0.
+    NewValue = FMath::Max(NewValue, 0.0f);
+  }
+	else if (Attribute == GetManaAttribute())
 	{
-		// Do not allow Armor regen to go negative or above max.
-		NewValue = FMath::Clamp(NewValue, 0.0f, 1000.0f);
+    // Do not allow attribute to go negative or above max.
+    NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxManaAttribute());
 	}
-	else if (Attribute == GetStaminaRegenAttribute())
-	{
-		// Do not allow Armor regen to go negative or above max.
-		NewValue = FMath::Clamp(NewValue, 0.0f, 1000.0f);
-	}
+  else if (Attribute == GetMaxManaAttribute())
+  {
+    // Do not allow max to drop below 0.
+    NewValue = FMath::Max(NewValue, 0.0f);
+  }
 }

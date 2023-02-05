@@ -49,16 +49,22 @@ void UFPSExtraAttributesComponent::InitializeWithAbilitySystem(ULyraAbilitySyste
 	// Register to listen for attribute changes.
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetArmorAttribute()).AddUObject(this, &ThisClass::HandleArmorChanged);
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetMaxArmorAttribute()).AddUObject(this, &ThisClass::HandleMaxArmorChanged);
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetHPRegenAttribute()).AddUObject(this, &ThisClass::HandleHPRegenChanged);
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetArmorRegenAttribute()).AddUObject(this, &ThisClass::HandleArmorRegenChanged);	
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetStaminaRegenAttribute()).AddUObject(this, &ThisClass::HandleStaminaRegenChanged);
-	
+  AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetStaminaAttribute()).AddUObject(this, &ThisClass::HandleStaminaChanged);
+  AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetMaxStaminaAttribute()).AddUObject(this, &ThisClass::HandleMaxStaminaChanged);
+  AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetManaAttribute()).AddUObject(this, &ThisClass::HandleManaChanged);
+  AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UFPSExtraAttributes::GetMaxManaAttribute()).AddUObject(this, &ThisClass::HandleMaxManaChanged);
 }
 
 void UFPSExtraAttributesComponent::UninitializeFromAbilitySystem()
 {
 	FPSExtraAttributes = nullptr;
 	AbilitySystemComponent = nullptr;
+}
+
+void UFPSExtraAttributesComponent::OnUnregister()
+{
+  UninitializeFromAbilitySystem();
+  Super::OnUnregister();
 }
 
 float UFPSExtraAttributesComponent::GetArmor() const
@@ -84,30 +90,50 @@ float UFPSExtraAttributesComponent::GetArmorNormalized() const
 	return 0.0f;
 }
 
-float UFPSExtraAttributesComponent::GetHPRegen() const
+float UFPSExtraAttributesComponent::GetStamina() const
 {
-	return (FPSExtraAttributes ? FPSExtraAttributes->GetHPRegen() : 0.0f);
+  return (FPSExtraAttributes ? FPSExtraAttributes->GetStamina() : 0.0f);
 }
 
-float UFPSExtraAttributesComponent::GetArmorRegen() const
+float UFPSExtraAttributesComponent::GetMaxStamina() const
 {
-	return (FPSExtraAttributes ? FPSExtraAttributes->GetArmorRegen() : 0.0f);
+  return (FPSExtraAttributes ? FPSExtraAttributes->GetMaxStamina() : 0.0f);
 }
 
-float UFPSExtraAttributesComponent::GetStaminaRegen() const
+float UFPSExtraAttributesComponent::GetStaminaNormalized() const
 {
-	return (FPSExtraAttributes ? FPSExtraAttributes->GetStaminaRegen() : 0.0f);
+  if (FPSExtraAttributes)
+  {
+    const float Stamina = FPSExtraAttributes->GetStamina();
+    const float MaxStamina = FPSExtraAttributes->GetMaxStamina();
+
+    return ((MaxStamina > 0.0f) ? (Stamina / MaxStamina) : 0.0f);
+  }
+
+  return 0.0f;
 }
 
-float UFPSExtraAttributesComponent::GetManaRegen() const
+float UFPSExtraAttributesComponent::GetMana() const
 {
-	return (FPSExtraAttributes ? FPSExtraAttributes->GetManaRegen() : 0.0f);
+  return (FPSExtraAttributes ? FPSExtraAttributes->GetMana() : 0.0f);
 }
 
-void UFPSExtraAttributesComponent::OnUnregister()
+float UFPSExtraAttributesComponent::GetMaxMana() const
 {
-	UninitializeFromAbilitySystem();
-	Super::OnUnregister();
+  return (FPSExtraAttributes ? FPSExtraAttributes->GetMaxMana() : 0.0f);
+}
+
+float UFPSExtraAttributesComponent::GetManaNormalized() const
+{
+  if (FPSExtraAttributes)
+  {
+    const float Mana = FPSExtraAttributes->GetMana();
+    const float MaxMana = FPSExtraAttributes->GetMaxMana();
+
+    return ((MaxMana > 0.0f) ? (Mana / MaxMana) : 0.0f);
+  }
+
+  return 0.0f;
 }
 
 static AActor* GetInstigatorFromAttrChangeDataFPSExtraAttributes(const FOnAttributeChangeData& ChangeData)
@@ -131,22 +157,22 @@ void UFPSExtraAttributesComponent::HandleMaxArmorChanged(const FOnAttributeChang
 	OnMaxArmorChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
 }
 
-void UFPSExtraAttributesComponent::HandleHPRegenChanged(const FOnAttributeChangeData& ChangeData)
+void UFPSExtraAttributesComponent::HandleStaminaChanged(const FOnAttributeChangeData &ChangeData)
 {
-	OnHPRegenChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
+  OnStaminaChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
 }
 
-void UFPSExtraAttributesComponent::HandleArmorRegenChanged(const FOnAttributeChangeData& ChangeData)
+void UFPSExtraAttributesComponent::HandleMaxStaminaChanged(const FOnAttributeChangeData &ChangeData)
 {
-	OnArmorRegenChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
+  OnMaxStaminaChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
 }
 
-void UFPSExtraAttributesComponent::HandleStaminaRegenChanged(const FOnAttributeChangeData& ChangeData)
+void UFPSExtraAttributesComponent::HandleManaChanged(const FOnAttributeChangeData &ChangeData)
 {
-	OnStaminaRegenChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
+  OnManaChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
 }
 
-void UFPSExtraAttributesComponent::HandleManaRegenChanged(const FOnAttributeChangeData& ChangeData)
+void UFPSExtraAttributesComponent::HandleMaxManaChanged(const FOnAttributeChangeData &ChangeData)
 {
-	OnManaRegenChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
+  OnMaxManaChanged.Broadcast(this, ChangeData.OldValue, ChangeData.NewValue, GetInstigatorFromAttrChangeDataFPSExtraAttributes(ChangeData));
 }
