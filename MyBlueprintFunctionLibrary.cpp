@@ -61,7 +61,7 @@ void UMyBlueprintFunctionLibrary::GiveActorAbilityWithInputTag(AActor* TargetAct
 	
 }
 
-void UMyBlueprintFunctionLibrary::SpawnEnemy(UGameStateComponent* GameStateComponent,  AFPSGameMode* GameMode, TSubclassOf<AAIController> BotControllerClass)
+void UMyBlueprintFunctionLibrary::SpawnEnemy(UGameStateComponent *GameStateComponent, AFPSGameMode *GameMode, FVector SpawnVector, FRotator SpawnRotator, TSubclassOf<AAIController> BotControllerClass)
 {
 	FActorSpawnParameters SpawnInfo;
 	SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;

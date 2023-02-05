@@ -55,6 +55,5 @@ public:
 		FMyBlueprintFunctionLibrary_GameplayAbilityStruct AbilityStruct);
 
 	UFUNCTION(BlueprintCallable, Category="FPS Blueprint Functions")
-	static void SpawnEnemy(UGameStateComponent* GameStateComponent, AFPSGameMode* GameMode, TSubclassOf<AAIController> BotControllerClass);	
-	
+  static void SpawnEnemy(UGameStateComponent *GameStateComponent, AFPSGameMode *GameMode, FVector SpawnVector, FRotator SpawnRotator, TSubclassOf<AAIController> BotControllerClass);
 };
