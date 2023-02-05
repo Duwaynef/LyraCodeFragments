@@ -92,15 +92,15 @@ TObjectPtr<UFPSExtraAttributesComponent> FPSExtraAttributesComponent;
 ```c
 #include "FPSExtraAttributesComponent.h"
 ```
-  -   line 97 ish
+  -   line 97 ish add
 ```c
 FPSExtraAttributesComponent = CreateDefaultSubobject<UFPSExtraAttributesComponent>(TEXT("FPSExtraAttributesComponent"));
 ```
-  - under OnAbilitySystemInitialized() line 226 ish
+  - under OnAbilitySystemInitialized() line 226 ish add
 ```c
 FPSExtraAttributesComponent->InitializeWithAbilitySystem(LyraASC);
 ```
-  - under UninitializeFromAbilitySystem() line 234 ish
+  - under UninitializeFromAbilitySystem() line 234 ish add
 ```c
 FPSExtraAttributesComponent->UninitializeFromAbilitySystem();
 ```
@@ -109,7 +109,7 @@ FPSExtraAttributesComponent->UninitializeFromAbilitySystem();
 ```c
 #include "FPSExtraAttributes.h"
 ```
-  -   line 56 ish
+  -   line 56 ish add
 ```c
 CreateDefaultSubobject<UFPSExtraAttributes>(TEXT("FPSExtraAttributes"));
 ```
